@@ -2,52 +2,15 @@ import React, { Component } from "react";
 import MyCard from "../../Components/MyCard";
 import { Row, Col } from "react-bootstrap";
 import MyLayout from "../../Components/MyLayout";
+import Footer from "../../Components/MyFooter/index";
 
 export default function HomePage() {
   return (
-    <MyLayout>
-      <Row>
-        <Col md="12">{/* <Intro /> */}</Col>
-      </Row>
-      <hr />
-      <Row className="mb-1">
-        <Col md="3">
-          <MyCard />
-        </Col>
-        <Col md="3">
-          <MyCard />
-        </Col>
-        <Col md="3">
-          <MyCard />
-        </Col>
-        <Col md="3">
-          <MyCard />
-        </Col>
-        <Col md="3">
-          <MyCard />
-        </Col>
-        <Col md="3">
-          <MyCard />
-        </Col>
-        <Col md="3">
-          <MyCard />
-        </Col>
-        <Col md="3">
-          <MyCard />
-        </Col>
-        <Col md="3">
-          <MyCard />
-        </Col>
-        <Col md="3">
-          <MyCard />
-        </Col>
-        <Col md="3">
-          <MyCard />
-        </Col>
-        <Col md="3">
-          <MyCard />
-        </Col>
-      </Row>
-    </MyLayout>
+    <div>
+      <MyLayout>
+        <h1>HOME PAGE</h1>
+      </MyLayout>
+      <Footer />
+    </div>
   );
 }

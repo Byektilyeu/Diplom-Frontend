@@ -38,14 +38,15 @@ export default class Foods extends Component {
           <Spinner />
         ) : (
           <div>
-            <Row>
-              <Col md="12">{/* <Intro /> */}</Col>
-            </Row>
             <hr />
-            {this.state.foods.map((el) => (
-              <Link to={`/foods/${el._id}`}>
-                <Row className="mb-1">
-                  <Col md="3">
+
+            <Row md="12">
+              {this.state.foods.map((el) => (
+                <Col md="3">
+                  <Link
+                    to={`/foods/${el._id}`}
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
                     <Card
                       className={`fj-card`}
                       style={{ marginBottom: "20px" }}
@@ -62,10 +63,10 @@ export default class Foods extends Component {
                         </Card.Body>
                       </div>
                     </Card>
-                  </Col>
-                </Row>
-              </Link>
-            ))}
+                  </Link>
+                </Col>
+              ))}
+            </Row>
           </div>
         )}
       </MyLayout>
