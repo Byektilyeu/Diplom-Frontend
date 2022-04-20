@@ -1,5 +1,11 @@
 export const HOME = "/";
 export const ABOUT = "/about";
+export const TABLE = "/table";
 export const LOGIN = "/login";
+export const CATEGORYSETTINGS = "/category";
+export const USERFOODS = "/user-foods";
+export const LOGINPAGE = "/loginpage";
+export const USERPROFIILE = "/userprofile";
 export const FOODS = "/foods";
 export const FOODDETAIL = "/foods:id";
+export const SERVERAPI = "http://10.200.97.150:8000";

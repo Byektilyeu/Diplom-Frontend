@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import axios from "axios";
+import axios from "../../axios";
+import MyLayout from "../MyLayout";
+
+import Alert from "react-bootstrap/Alert";
 
 export default class FoodDetail extends Component {
   state = {
@@ -31,9 +34,13 @@ export default class FoodDetail extends Component {
   };
 
   componentDidMount() {
+    console.log(
+      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      this.props.match.params.id
+    );
     this.setState({ loading: true });
     axios
-      .get("http://localhost:8000/api/v1/foods/" + this.props.match.params.id)
+      .get("foods/" + this.props.match.params.id)
       .then((result) =>
         this.setState({ ...result.data.data, error: null, loading: false })
       )
@@ -43,10 +50,10 @@ export default class FoodDetail extends Component {
   }
 
   handleSave = () => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
     this.setState({ loading: true, success: null });
     axios
-      .put("http://localhost:8000/api/v1/foods/" + this.props.match.params.id, {
+      .put("foods/" + this.props.match.params.id, {
         name: this.state.name,
         photo: this.state.photo,
         author: this.state.author,
@@ -73,12 +80,10 @@ export default class FoodDetail extends Component {
   };
 
   handleDelete = () => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
     this.setState({ loading: true, success: null });
     axios
-      .delete(
-        "http://localhost:8000/api/v1/foods/" + this.props.match.params.id
-      )
+      .delete("foods/" + this.props.match.params.id)
       .then((result) => {
         this.setState({
           deleted: true,
@@ -98,12 +103,22 @@ export default class FoodDetail extends Component {
     }
 
     return (
-      <div>
-        {/* {this.state.error && <div>{this.state.error}</div>}
+      <MyLayout>
+        {this.state.error && <div>{this.state.error}</div>}
 
-        {this.state.success && <div>{this.state.success}</div>} */}
-        {/* <h1 className="title">{this.state.name}</h1> */}
-        {/* <div>
+        {this.state.success && (
+          <div>
+            <Alert
+              variant="success"
+              style={{
+                width: "22rem",
+              }}
+            >
+              <Alert.Heading>{this.state.success}</Alert.Heading>
+            </Alert>
+          </div>
+        )}
+        <div>
           <div>
             <div>
               <label>Нэр</label>
@@ -141,9 +156,7 @@ export default class FoodDetail extends Component {
             </div>
           </div>
         </div>
-      </div> */}
-        hahahhahaha
-      </div>
+      </MyLayout>
     );
   }
 }

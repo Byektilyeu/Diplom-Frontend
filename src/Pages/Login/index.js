@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import Spinner from "../../Components/Spinner/index";
-import axios from "axios";
+import axios from "../../axios";
 import { Redirect } from "react-router-dom";
-import Footer from "../../Components/MyFooter";
+import { Spinner } from "react-bootstrap";
 
 export default class Login extends Component {
   state = {
@@ -10,6 +9,7 @@ export default class Login extends Component {
     password: null,
     error: null,
     loading: false,
+    isLoggedIn: false,
   };
 
   handleType = (e) => {
@@ -24,13 +24,16 @@ export default class Login extends Component {
   handleClick = () => {
     this.setState({ loading: true });
     axios
-      .post("http://localhost:8000/api/v1/users/login", {
+      .post("users/login", {
         email: this.state.email,
         password: this.state.password,
       })
       .then((result) => {
         this.setState({ loading: false });
-        this.props.onLogin(result.data.token);
+        this.props.onLogin(result.data.token, result.data.user._id);
+        this.setState({ isLoggedIn: true });
+        // this.props.id(result.data.user._id);
+        // console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", result.data.user);
       })
       .catch((err) =>
         this.setState({
@@ -41,25 +44,33 @@ export default class Login extends Component {
   };
 
   render() {
-    // console.log(document.cookie);
     return (
       <div>
-        {document.cookie && <Redirect to="/" />}
-        {this.state.loading && <Spinner />}
-        <div class="row">
+        {/* {document.cookie && <Redirect to="/" />} */}
+        {this.state.isLoggedIn && <Redirect to="/" />}
+        {this.state.loading && (
+          <div
+            className="d-flex justify-content-center"
+            style={{ marginTop: 20 }}
+          >
+            Та түр хүлээнэ үү <Spinner animation="border" />
+          </div>
+        )}
+        {/* <UserProfile id={this.state.id} /> */}
+        <div class="row" style={{ marginTop: 50 }}>
           <div class="col-md-4"></div>
           <div class="col-md-4 bg-light">
             <div class="login align-items-center py-5">
               <div class="container">
                 <div class="row">
                   <div class="col-lg-10 col-xl-10 mx-auto">
-                    <h1 class="display-5">Login Form</h1>
+                    <h1 class="display-5">Нэвтрэх хуудас</h1>
                     <p class="text-muted mb-4"></p>
                     <div class="mb-4">
                       <input
                         type="text"
                         name="email"
-                        placeholder="Email address"
+                        placeholder="И-мэйл хаяг"
                         onChange={this.handleType}
                         class="form-control rounded-pill border-0 shadow-sm px-4"
                       />
@@ -68,7 +79,7 @@ export default class Login extends Component {
                       <input
                         type="password"
                         name="password"
-                        placeholder="Password"
+                        placeholder="Нууц үг"
                         onChange={this.handleType}
                         class="form-control rounded-pill border-0 shadow-sm px-4 text-primary"
                       />
@@ -79,7 +90,7 @@ export default class Login extends Component {
                         onClick={this.handleClick}
                         class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm"
                       >
-                        Sign in
+                        Нэвтрэх
                       </button>
                     </div>
                   </div>
@@ -88,9 +99,6 @@ export default class Login extends Component {
             </div>
           </div>
         </div>
-        {/* <div>
-          <Footer />
-        </div> */}
       </div>
     );
   }

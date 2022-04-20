@@ -1,5 +1,6 @@
 import React from "react";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import UserProfile from "../../Pages/UserProfile";
 
 const MyNavbar = (props) => {
   return (
@@ -9,19 +10,32 @@ const MyNavbar = (props) => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/about">About</Nav.Link>
-              <NavDropdown title="Categories" id="basic-nav-dropdown">
-                <NavDropdown.Item href="/foods">Foods</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
+              <Nav.Link href="/">Нүүр |</Nav.Link>
+              <Nav.Link href="/about">Бидний тухай |</Nav.Link>
+              <Nav.Link href="/category">Категори | </Nav.Link>
+              <Nav.Link href="/user-foods">Таны оруулсан хоолнууд | </Nav.Link>
+              <NavDropdown title="Бүх хоолнууд" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/foods">
+                  Бүх хоолыг харах
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
+                <NavDropdown.Item href="#category1">
+                  Категори 1
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#category2">
+                  Категори 2
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#category3">
+                  Категори 3
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#category4">
+                  Категори 4
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#category5">
+                  Категори 5
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#category6">
+                  Категори 6
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
@@ -30,7 +44,7 @@ const MyNavbar = (props) => {
           <Nav className="me-auto">
             <NavDropdown title="Хэрэглэгч" id="basic-nav-dropdown">
               <NavDropdown.Item href="/login">Нэвтрэх</NavDropdown.Item>
-              <NavDropdown.Item href="/#action/3.1">
+              <NavDropdown.Item href="/userprofile">
                 Хувийн мэдээлэл
               </NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Тохиргоо</NavDropdown.Item>

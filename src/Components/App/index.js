@@ -1,26 +1,30 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter, Switch, Route, useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-import axios from "axios";
+import axios from "../../axios";
 
 import Home from "../../Pages/Home";
+import UserProfile from "../../Pages/UserProfile";
 import About from "../../Pages/About";
 import Login from "../../Pages/Login";
+import UserFoods from "../../Pages/UserFoods/index";
 import Foods from "../Foods/index";
 import FoodDetail from "../FoodDetail/index";
 import MyNabvar from "../MyNavbar/index";
 import * as ROUTES from "../../constants/routes";
+import CategorySettingsPage from "../../Pages/CategorySettingsPage";
 
-export default class App extends Component {
-  state = {
-    token: null,
-  };
+const App = () => {
+  const history = useHistory();
+  const [_token, setToken] = useState(null);
+  const [_id, setId] = useState("hhshshhshs");
 
-  handleLogout = () => {
+  const handleLogout = () => {
     localStorage.removeItem("token");
-    this.setState({ token: null });
-    this.router.history.push("/");
+    localStorage.removeItem("id");
+    setToken(null);
+    history.push("/");
     console.log("logged out");
 
     // document.cookie =
@@ -28,36 +32,47 @@ export default class App extends Component {
     //   new Date(Date.now() - 360 * 24 * 60 * 60 * 1000);
 
     axios
-      .get("http://localhost:8000/api/v1/users/logout")
-      .then((result) => this.router.history.push("/"))
+      .get("users/logout")
+      .then((result) => history.push("/"))
       .catch((err) => console.log(err));
   };
 
-  handleLogin = (token) => {
-    this.setState({ token });
+  const handleLogin = (token, id) => {
+    // setToken(token);
+    setId(id);
     localStorage.setItem("token", token);
-    this.router.history.push("/");
-    // console.log("logged in... " + token);
+    localStorage.setItem("id", id);
+    history.push("/");
   };
-  render() {
-    return (
-      <Router ref={(router) => (this.router = router)}>
-        <div>
-          <MyNabvar onLogout={this.handleLogout} />
-          <Switch>
-            <Route exact path={ROUTES.HOME} component={Home} />
-            <Route exact path={ROUTES.ABOUT} component={About} />
-            <Route
-              exact
-              path={ROUTES.LOGIN}
-              render={() => <Login onLogin={this.handleLogin} />}
-            />
-            <Route path="/books/:id" component={FoodDetail} />
-            {/* <Route exact path={ROUTES.FOODDETAIL} component={FoodDetail} /> */}
-            <Route exact path={ROUTES.FOODS} component={Foods} />
-          </Switch>
-        </div>
-      </Router>
-    );
-  }
-}
+
+  return (
+    <BrowserRouter>
+      <div>
+        <MyNabvar onLogout={handleLogout} />
+        <Switch>
+          <Route exact path={ROUTES.HOME} component={Home} />
+          <Route exact path={ROUTES.ABOUT} component={About} />
+          <Route
+            exact
+            path={ROUTES.CATEGORYSETTINGS}
+            component={CategorySettingsPage}
+          />
+          <Route exact path={ROUTES.USERFOODS} component={UserFoods} />
+          <Route
+            exact
+            path={ROUTES.LOGIN}
+            render={() => <Login onLogin={handleLogin} />}
+          />
+
+          <Route path={ROUTES.USERPROFIILE}>
+            <UserProfile id={localStorage.getItem("id")} />
+          </Route>
+          <Route path="/foods/:id" component={FoodDetail} />
+          {/* <Route exact path={ROUTES.FOODDETAIL} component={FoodDetail} /> */}
+          <Route exact path={ROUTES.FOODS} component={Foods} />
+        </Switch>
+      </div>
+    </BrowserRouter>
+  );
+};
+export default App;

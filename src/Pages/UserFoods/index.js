@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../axios";
-// import Spinner from "../Spinner/index";
+import { Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Card, Spinner } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { Row, Col, InputGroup, FormControl } from "react-bootstrap";
 import MyLayout from "../../Components/MyLayout";
-// import food from "../../assets/food.jpg";
 import { SERVERAPI } from "../../constants/routes";
 
-const Foods = () => {
+const UserFoods = () => {
+  const [id, setId] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [foods, setFoods] = useState([]);
@@ -18,41 +18,42 @@ const Foods = () => {
     setSearchValue(e.target.value);
   };
 
-  useEffect(() => {
-    document.cookie =
-      "limit=; expires=" + new Date(Date.now() - 360 * 24 * 60 * 60 * 1000);
-    console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii", document.cookie);
-    setLoading(true);
-
-    // cookie-gees limit-iig unshij avna
-    axios
-      .get("foods")
-      .then((result) => {
-        // console.log("ahhhhhhhhhhhhhhhhhhhhhhhh", result.data.data);
-        setLoading(false);
-        setFoods(result.data.data);
-      })
-      .catch((err) => {
-        setLoading(true);
-        setError(err.message);
-      });
-  }, []);
-
   const filteredFoods = foods.filter(
     (el) =>
       el.name.toLowerCase().includes(searchValue.toLowerCase()) ||
       el.content.toLowerCase().includes(searchValue.toLowerCase())
   );
-  // console.log("filteredFoods: ", filteredFoods);
+
+  useEffect(() => {
+    console.log(document.cookie);
+
+    document.cookie =
+      "limit=; expires=" + new Date(Date.now() - 360 * 24 * 60 * 60 * 1000);
+
+    setLoading(true);
+    setId(localStorage.getItem("id"));
+    // cookie-gees limit-iig unshij avna
+    axios
+      .get(`users/${id}/foods`)
+      .then((result) => {
+        console.log("ahhhhhhhhhhhhhhhhhhhhhhhh", result.data.data);
+        setLoading(false);
+        setFoods(result.data.data);
+      })
+      .catch((err) => {
+        setLoading(false);
+        setError(err.response);
+      });
+  }, []);
 
   return (
     <MyLayout>
       {loading ? (
         <div
           className="d-flex justify-content-center"
-          style={{ marginTop: 200 }}
+          style={{ marginTop: 20 }}
         >
-          <Spinner animation="border" />
+          Та түр хүлээнэ үү <Spinner animation="border" />
         </div>
       ) : (
         <div>
@@ -84,7 +85,6 @@ const Foods = () => {
                         <Card.Img
                           style={{ width: 253, height: 220 }}
                           variant="top"
-                          // src={food}
                           src={`${SERVERAPI}/upload/` + el.photo}
                         />
                       </div>
@@ -105,4 +105,5 @@ const Foods = () => {
     </MyLayout>
   );
 };
-export default Foods;
+
+export default UserFoods;
