@@ -14,6 +14,7 @@ import FoodDetail from "../FoodDetail/index";
 import MyNabvar from "../MyNavbar/index";
 import * as ROUTES from "../../constants/routes";
 import CategorySettingsPage from "../../Pages/CategorySettingsPage";
+import Register from "../../Pages/Register";
 
 const App = () => {
   const history = useHistory();
@@ -70,6 +71,7 @@ const App = () => {
           <Route path="/foods/:id" component={FoodDetail} />
           {/* <Route exact path={ROUTES.FOODDETAIL} component={FoodDetail} /> */}
           <Route exact path={ROUTES.FOODS} component={Foods} />
+          <Route exact path={ROUTES.REGISTER} component={Register} />
         </Switch>
       </div>
     </BrowserRouter>

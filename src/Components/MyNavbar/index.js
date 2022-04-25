@@ -43,6 +43,7 @@ const MyNavbar = (props) => {
 
           <Nav className="me-auto">
             <NavDropdown title="Хэрэглэгч" id="basic-nav-dropdown">
+              <NavDropdown.Item href="/register">Бүртгүүлэх</NavDropdown.Item>
               <NavDropdown.Item href="/login">Нэвтрэх</NavDropdown.Item>
               <NavDropdown.Item href="/userprofile">
                 Хувийн мэдээлэл

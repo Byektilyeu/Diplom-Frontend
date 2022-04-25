@@ -199,9 +199,9 @@ const CategorySettingsPage = () => {
               bordered
               hover
               size="sm"
-              style={{
-                backgroundColor: "#E1F3FF",
-              }}
+              // style={{
+              //   backgroundColor: "#E1F3FF",
+              // }}
             >
               <thead>
                 <tr>
